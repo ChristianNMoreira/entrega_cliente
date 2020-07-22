@@ -66,4 +66,38 @@ class Comment(db.Model):
                 #'date': self.date,
                 #'user_id': self.user_id,
                 'user': self.c_owner.json(),
-                'owner': self.owner.json()}
+                'post': self.owner.json()}
+
+class Chat(db.Model):
+    __tablename__ = 'chats'
+    id = db.Column(db.Integer, primary_key=True)
+
+    user1_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user2_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    messages = db.relationship('Message', backref='owner')
+    
+    def json(self):
+
+        return {'id': self.id,
+                'user1_id': self.user1_id,
+                'user2_id': self.user2_id}
+    
+
+class Message(db.Model):
+    __tablename__ = 'messages'
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200), nullable=False)
+
+    owner_id = db.Column(db.Integer, db.ForeignKey('chats.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sender_name = db.Column(db.String(200), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    receiver_name = db.Column(db.String(200), nullable=False)
+
+    def json(self):
+
+        return {'id': self.id,
+                'text': self.text,
+                'from': self.sender_name,
+                'to': self.receiver_name}
