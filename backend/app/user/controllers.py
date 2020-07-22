@@ -69,8 +69,8 @@ def login():
     if not user:
         return {'erro': 'Usuario ou senha incorretos'}, 400
 
-    if not user.active:
-        return {'erro': 'Usuario nao esta ativo'}, 400
+    #if not user.active:
+    #    return {'erro': 'Usuario nao esta ativo'}, 400
 
     if bcrypt.checkpw(password.encode(), user.password_hash):
         access_token = create_access_token(identity=user.id)
