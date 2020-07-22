@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title>PAME</title>-->
+</head>
+<body>
+    <h1>Olá, {{name}}!</h1>
+    <p>
+        Para confirmar seu cadastro
+        <a
+          href="{{ url_for('user_api.activate', token=token, _external=True) }}"
+          >Clique Aqui</a
+        >.
+      </p>
+</body>
+</html>
